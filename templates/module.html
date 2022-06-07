@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+{% block cs %}
+    <title>Keyfall的博客</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/kudaompq.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/custom.css')}}">
+    <script src="{{url_for('static', filename='js/jquery-2.1.3.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+<!--    图标的cdn-->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+{% endblock cs%}
+</head>
+<body>
+
+
+
+
+
+{% block border %}
+<div class="container margin-b-lg">
+    <nav class="navbar navbar-expand-md border-bottom">
+        <!-- logo -->
+        <h1><a class="navbar-brand text-dark font-size-bg" href="#">Keyfall的博客</a></h1>
+        <!-- 当屏幕小的时候自动收缩导航栏改用下拉列表 -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#headerNavbar">
+            <i class="fa fa-bars"></i>
+        </button>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse justify-content-end" id="headerNavbar">
+            <ul class="navbar-nav font-size-lg">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{url_for('blog.queryall')}}">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{url_for('sort.queryall')}}">分类</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{{url_for('tag.queryall')}}">标签</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="#">关于我</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="#" ><i class="fa fa-search fa-fw"></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+{% endblock border %}
+
+
+{% block content %}
+{% endblock content%}
+
+{% block right %}
+<div class="col-sm-3">
+            <div class="bar shadow-small text-center">
+                <img src="{{url_for('static', filename='img/yuzhi.jpg')}}" class="rounded-circle" alt=""
+                     style="width: 110px">
+                <div class="author-info-name margin-tb-normal">Keyfall</div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <a href="#">
+                            <div>文章</div>
+                            <div>{{starblogs|length}}</div>
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="">
+                            <div>标签</div>
+                            <div>{{tags|length}}</div>
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="#">
+                            <div>分类</div>
+                            <div>{{sorts|length}}</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    {%block stars %}
+                <div class="bar shadow-small">
+                <h3 class="bar-title">最赞文章</h3>
+                <ul class="bar-list" id="bar-article">
+                    {% for blog in starblogs[0:4] %}
+                    <li><a href="{{url_for('blog.queryone',id=blog.id)}}">{{blog.blogname}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+    {% endblock stars %}
+    {% block sort %}
+                <div class="bar shadow-small">
+                <h3 class="bar-title">分类</h3>
+                <ul class="bar-list" id="bar-category">
+                    {% for sort in sorts %}
+                    <li><a href="#">{{ sort.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+    {% endblock sort%}
+    {% block tag %}
+                <div class="bar shadow-small">
+                <h3 class="bar-title">标签</h3>
+                <div class="card-tag-cloud text-center">
+                    {% for tag in tags %}
+                    <a href="#" >{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+    {% endblock tag %}
+            {% block latestblog %}
+                        <div class="bar shadow-small">
+                <h3 class="bar-title">最新文章</h3>
+                <ul class="bar-list" id="bar-article">
+                    {% for blog in timeblogs[0:4] %}
+                    <li><a href="{{url_for('blog.queryone',id=blog.id)}}">{{blog.blogname}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endblock latestblog %}
+
+</div>
+{% endblock right%}
+
+
+{% block footer %}
+<!--footer-->
+<div class="container footer">
+    <div class="row">
+        <div class="col-sm-12 text-center margin-tb-large">
+            <p class="footer-copyright">©2022 - 2023 By Z-All.Keyfall</p>
+            <p class="footer-copyright">thanks for Kudaompq</p>
+        </div>
+    </div>
+</div>
+{% endblock footer %}
+
+
+
+</body>
+</html>

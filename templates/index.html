@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "module.html" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block cs %}
+    {{ super()}}
+    {% endblock cs %}
+</head>
+<body>
+
+{% block border %}
+{{super()}}
+{% endblock border %}
+{% block content %}
+{{ super() }}
+<div class="container margin-b-lg">
+    <div class="row">
+        <!--    博客列表-->
+        <div class="col-sm-9 text-center">
+            {% for blog in timeblogs %}
+            <div class="article-index shadow-small">
+                <div class="font-size-article-header">{{ blog.blogname}}</div>
+                <div class="article-index-tags">
+                    <span class="article-category">
+                        {% if blog.sorts.name %}
+                            {{blog.sorts.name}}
+                        {% else %}
+                            默认
+                        {% endif %}
+                    </span>
+                    <span class="article-date">{{blog.create_time}}</span>
+                    <span class="article-link">4 评论</span>
+                    <span class="article-link">588 阅读</span>
+                    <span>{{blog.stars}} 点赞</span>
+                </div>
+
+
+                <div class="article-index-content">
+                    <p overflow='hidden' text-overflow='ellipsis' white-space='nowrap'>{{blog.content}}</p>
+                    <div class="read-more cl-effect-14">
+                        <a href="{{url_for('blog.queryone',id=blog.id)}}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor%}
+            <ul class="pagination pagination-sm justify-content-center">
+                            {% if pagination.has_prev %}
+
+                <li class="page-item"><a href="{{ url_for('blog.queryallpage',page=pagination.prev_num)}}" class="page-link text-dark"><i class="fa fa-chevron-left " ></i></a></li>
+                            {% endif %}
+            {% for i in pagination.iter_pages() %}
+                <li class="page-item"><a class="page-link text-dark" href="{{ url_for('blog.queryallpage',page=i )}}">{{i}}</a></li>
+            {% endfor %}
+                            {% if pagination.has_next %}
+
+                <li class="page-item"><a href="{{ url_for('blog.queryallpage',page=pagination.next_num )}}" class="page-link text-dark"><i class="fa fa-chevron-right"></i></a></li>
+                            {% endif %}
+            </ul>
+        </div>
+        {% endblock content %}
+
+
+
+
+
+        <!--  bar  -->
+        {% block right %}
+            {{super()}}
+        {% block latestblog %}
+        {% endblock latestblog %}
+
+        {% endblock right %}
+    </div>
+</div>
+<!--footer-->
+{% block footer %}
+{{super()}}
+{% endblock footer %}
+</body>
+</html>

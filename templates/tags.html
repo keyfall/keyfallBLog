@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "module.html" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block cs %}
+    {{ super()}}
+    {% endblock cs %}
+</head>
+<body>
+{% block border %}
+{{super()}}
+{% endblock border %}
+{% block content %}
+{{ super() }}
+<div class="container margin-b-lg">
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="category shadow-small">
+                <div class="category-header text-center">
+                    <div class="category-header-title">标签</div>
+                    <p class="category-header-note">共{{blogslenth}}个文章</p>
+                </div>
+                <div class="tag-cloud-list text-center">
+                    {% for tag in tags%}
+                    <a href="#" >{{tag.name}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+        {% endblock content %}
+               {% block right %}
+            {{super()}}
+                {% block latestblog %}
+        {% endblock latestblog %}
+        {% endblock right %}
+    </div>
+</div>
+<!--footer-->
+{% block footer %}
+{{super()}}
+{% endblock footer %}
+</body>
+</html>
