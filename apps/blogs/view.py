@@ -10,7 +10,21 @@ from settings import *
 blog = Blueprint('blog', __name__,url_prefix="/blog/")
 
 
-
+@blog.route('aboutme/')
+def aboutme():
+    blogs = Blog.query
+    pagination = blogs.order_by(Blog.create_time.desc()).paginate(1,pageSize,error_out=False)
+    timeblogs=pagination.items
+    starblogs = blogs.order_by(Blog.stars.desc()).all()
+    tags = Tag.query.all()
+    sorts = sort.query.all()
+    context = {
+        "starblogs":starblogs,
+        'timeblogs':timeblogs,
+        'tags':tags,
+        'sorts':sorts
+    }
+    return render_template("about.html", **context)
 
 @blog.route('add/')
 def sss():

@@ -41,7 +41,7 @@
                     <a class="nav-link text-dark" href="{{url_for('tag.queryall')}}">标签</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">关于我</a>
+                    <a class="nav-link text-dark" href="{{url_for('blog.aboutme')}}">关于我</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="#" ><i class="fa fa-search fa-fw"></i></a>
@@ -54,6 +54,8 @@
 
 
 {% block content %}
+<div class="container margin-b-lg h1000">
+    <div class="row">
 {% endblock content%}
 
 {% block right %}
@@ -124,6 +126,8 @@
             </div>
             {% endblock latestblog %}
 
+</div>
+    </div>
 </div>
 {% endblock right%}
 

@@ -15,8 +15,7 @@
 {% endblock border %}
 {% block content %}
 {{ super() }}
-<div class="container margin-b-lg">
-    <div class="row">
+
         <!--    博客列表-->
         <div class="col-sm-9 text-center">
             {% for blog in timeblogs %}
@@ -72,8 +71,7 @@
         {% endblock latestblog %}
 
         {% endblock right %}
-    </div>
-</div>
+
 <!--footer-->
 {% block footer %}
 {{super()}}
