@@ -5,12 +5,13 @@
 {% block cs %}
     <title>Keyfall的博客</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/kudaompq.css')}}">
+
     <link rel="stylesheet" href="{{url_for('static', filename='css/custom.css')}}">
     <script src="{{url_for('static', filename='js/jquery-2.1.3.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
 <!--    图标的cdn-->
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/kudaompq.css')}}">
 {% endblock cs%}
 </head>
 <body>
@@ -66,19 +67,19 @@
                 <div class="author-info-name margin-tb-normal">Keyfall</div>
                 <div class="row">
                     <div class="col-sm-4">
-                        <a href="#">
+                        <a href="{{url_for('blog.queryallarticles',page=1)}}">
                             <div>文章</div>
                             <div>{{starblogs|length}}</div>
                         </a>
                     </div>
                     <div class="col-sm-4">
-                        <a href="">
+                        <a href="{{url_for('tag.queryall')}}">
                             <div>标签</div>
                             <div>{{tags|length}}</div>
                         </a>
                     </div>
                     <div class="col-sm-4">
-                        <a href="#">
+                        <a href="{{url_for('sort.queryall')}}">
                             <div>分类</div>
                             <div>{{sorts|length}}</div>
                         </a>
@@ -100,7 +101,7 @@
                 <h3 class="bar-title">分类</h3>
                 <ul class="bar-list" id="bar-category">
                     {% for sort in sorts %}
-                    <li><a href="#">{{ sort.name }}</a></li>
+                    <li><a href="{{url_for('sort.queryone',id=sort.id,page=1)}}">{{ sort.name }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -110,7 +111,7 @@
                 <h3 class="bar-title">标签</h3>
                 <div class="card-tag-cloud text-center">
                     {% for tag in tags %}
-                    <a href="#" >{{ tag.name }}</a>
+                    <a href="{{url_for('tag.queryone',id=tag.id,page=1)}}" >{{ tag.name }}</a>
                     {% endfor %}
                 </div>
             </div>

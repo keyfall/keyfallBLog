@@ -16,20 +16,11 @@
 {{ super() }}
         <div class="col-sm-9">
             <div class="category shadow-small">
-                <div class="category-header">
-                    <div class="category-header-title">分类</div>
-                    <p class="category-header-note">共{{blogslength}}个文章</p>
+                <div class="category-header text-center">
+                    <div class="category-header-title">这里啥都没有哦</div>
                 </div>
-                <div class="category-list">
-                    {% for sort in sorts %}
-                    <a href="{{url_for('tag.queryone',page=1,id=tag.id)}}" class="category-item">
-                        <i class="fa fa-folder-o"></i>
-                        {{sort.name}}<span>({{sort.blogs|length}})</span>
-                    </a>
-                    {% endfor %}
-                </div>
-            </div>
 
+            </div>
         </div>
         {% endblock content %}
                {% block right %}

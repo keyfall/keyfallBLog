@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "module.html" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block cs %}
+    {{ super()}}
+    {% endblock cs %}
+</head>
+<body>
+{% block border %}
+{{super()}}
+{% endblock border %}
+{% block content %}
+{{ super() }}
+        <div class="col-sm-9">
+            <div class="category shadow-small">
+                <div class="category-header">
+                    <div class="category-header-title">{{title}}</div>
+                    <p class="category-header-note">共{{timeblogs|length}}个文章</p>
+                </div>
+                <div class="category-list">
+                    {% for blog in timeblogs %}
+                    <a href="{{ url_for('blog.queryone',id=blog.id)}}" class="category-item">
+                        <i class="fa fa-folder-o"></i>
+                        {{blog.blogname}}<span style="float:right">{{blog.create_time}}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <ul class="pagination pagination-sm justify-content-center">
+                            {% if pagination.has_prev %}
+
+                <li class="page-item"><a href="{{ url_for('blog.queryallarticles',page=pagination.prev_num)}}" class="page-link text-dark"><i class="fa fa-chevron-left " ></i></a></li>
+                            {% endif %}
+            {% for i in pagination.iter_pages() %}
+                <li class="page-item"><a class="page-link text-dark" href="{{ url_for('blog.queryallarticles',page=i )}}">{{i}}</a></li>
+            {% endfor %}
+                            {% if pagination.has_next %}
+
+                <li class="page-item"><a href="{{ url_for('blog.queryallarticles',page=pagination.next_num )}}" class="page-link text-dark"><i class="fa fa-chevron-right"></i></a></li>
+                            {% endif %}
+            </ul>
+        </div>
+        {% endblock content %}
+               {% block right %}
+            {{super()}}
+                {% block latestblog %}
+        {% endblock latestblog %}
+        {% endblock right %}
+
+<!--footer-->
+{% block footer %}
+{{super()}}
+{% endblock footer %}
+</body>
+</html>

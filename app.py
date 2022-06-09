@@ -24,9 +24,12 @@ db = SQLAlchemy(app)
 from apps.blogs.view import blog
 from apps.tags.view import tag
 from apps.sorts.view import Sort
+from apps.bug.view import bug
+
 app.register_blueprint(blog)
 app.register_blueprint(tag)
 app.register_blueprint(Sort)
+app.register_blueprint(bug)
 
 
 

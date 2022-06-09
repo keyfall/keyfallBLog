@@ -22,13 +22,27 @@
                 <div class="article-header">
                     <h1 class="article-title">{{blog.blogname}}</h1>
                     <div class="article-meta">
-                        <span class="article-category"><a href="#">{{blog.sorts.name}}</a></span>
+                        <span class="article-category">
+                            {% if blog.sorts.id %}
+                            <a href="{{url_for('sort.queryone',id=blog.sorts.id,page=1)}}">{{blog.sorts.name}}</a>
+                            {% else %}
+                        <a href="{{url_for('bug.g404')}}">默认</a>
+                            {% endif %}
+                            </span>
                         <span class="article-date"><a href="#">{{blog.create_time}}</a></span>
                         <span class="article-link"><a href="#">4 评论</a></span>
                         <span class="article-link"><a href="#">588 阅读</a></span>
                         <span class="views-count"><a href="#">{{blog.stars}} 点赞</a></span>
+                    </div>
+                    {% if blog.tags != None%}
+                    <div class="article-tagmeta">
+                        <span>tag:</span>
+                        {% for tag in blog.tags%}
+                        <span style="margin-right:5px"><a href="{{url_for('tag.queryone',id=tag.id,page=1)}}">{{tag.name}}</a></span>
+                        {% endfor %}
 
                     </div>
+                    {% endif %}
                 </div>
                 <div class="article-content clearfix">
                 {{blog.content}}

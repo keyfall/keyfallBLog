@@ -22,7 +22,7 @@
                 </div>
                 <div class="tag-cloud-list text-center">
                     {% for tag in tags%}
-                    <a href="#" >{{tag.name}}</a>
+                    <a href="{{url_for('tag.queryone',page=1,id=tag.id)}}" >{{tag.name}}</a>
                     {% endfor %}
                 </div>
             </div>

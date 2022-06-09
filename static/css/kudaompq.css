@@ -21,7 +21,9 @@ blockquote {
 .border-bottom{
     border-bottom: 1px solid #e7e7e7;
 }
-
+.fa-folder-o:before {
+    content: "\f061";
+}
 /*字体大小*/
 .font-size-bg{
     font-size: 1.5rem !important;
@@ -30,6 +32,11 @@ blockquote {
 .font-size-lg{
     font-size: 20px;
     font-weight: 300;
+}
+.article-tagmeta{
+    text-align:center;
+    margin-bottom: 20px;
+    font-size:13px;
 }
 .font-size-article-header{
     font-size: 1.9em;
@@ -334,17 +341,12 @@ blockquote {
     text-align: center;
     color: #DDDDDD;
     font-size: 13px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 .article-body{
     padding: 20px;
 }
-.article-meta {
-    text-align: center;
-    color: #DDDDDD;
-    font-size: 13px;
-    margin-bottom: 30px;
-}
+
 .article-content{
     font-size: 18px;
     line-height: 1.9;

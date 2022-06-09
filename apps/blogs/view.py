@@ -95,3 +95,25 @@ def queryallpage(page=None):
         "pagination":pagination
     }
     return render_template("index.html",**context)
+
+
+@blog.route('queryallarticles/<int:page>/')
+def queryallarticles(page=None):
+    if(page==None):
+        page=1
+    blogs = Blog.query
+    pagination = blogs.order_by(Blog.create_time.desc()).paginate(page,20,error_out=False)
+    timeblogs=pagination.items
+    starblogs = blogs.order_by(Blog.stars.desc()).all()
+    tags = Tag.query.all()
+    sorts = sort.query.all()
+
+    context = {
+        "starblogs":starblogs,
+        'timeblogs':timeblogs,
+        'tags':tags,
+        'sorts':sorts,
+        "pagination":pagination,
+        "title":"文章"
+    }
+    return render_template("blogs.html",**context)

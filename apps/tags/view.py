@@ -44,9 +44,30 @@ def sss3():
     return "ok"
 
 
-@tag.route('query/')
-def queryone():
-    return "ok"
+@tag.route('query/<int:id>/<int:page>')
+def queryone(id=None,page=None):
+    if(page==None):
+        page=1
+    if(id==None):
+        id=1
+    blogs = Blog.query
+    pagination = blogs.filter(Blog.sort_id==id).order_by(Blog.create_time.desc()).paginate(page,20,error_out=False)
+    timeblogs=pagination.items
+    starblogs = blogs.order_by(Blog.stars.desc()).all()
+    title = Tag.query.get_or_404(id).name
+    tags = Tag.query.all()
+    sorts = sort.query.all()
+
+    context = {
+        "starblogs":starblogs,
+        'timeblogs':timeblogs,
+        'tags':tags,
+        'sorts':sorts,
+        "pagination":pagination,
+        "title":title,
+        "id":id
+    }
+    return render_template("tag.html",**context)
 
 
 @tag.route('queryall/')
