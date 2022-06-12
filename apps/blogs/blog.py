@@ -17,5 +17,34 @@ class Blog(db.Model):
 
 
 
+    def auth_to_dict(self):
+        tagsdict = {}
+        for index,tag in enumerate(self.tags):
+            tagsdict[index] = tag.auth_to_dict
+        auth_dict = {
+            "id" : self.id,
+            "blogname" : self.blogname,
+            "content" : self.content,
+            "create_time" : self.create_time,
+            "update_time" : self.update_time,
+            "image_url" : self.image_url,
+            "stars" : self.stars,
+            "tags" : tagsdict,
+            "sort" : self.sorts.auth_dict() if self.sort_id is not None else "默认"
+        }
+        return auth_dict
+
+    def auth_dict(self):
 
 
+        auth_dict = {
+            "id" : self.id,
+            "blogname" : self.blogname,
+            "content" : self.content,
+            "create_time" : self.create_time,
+            "update_time" : self.update_time,
+            "image_url" : self.image_url,
+            "stars" : self.stars,
+            "sort": self.sorts.auth_dict() if self.sort_id is not None else "默认"
+        }
+        return auth_dict

@@ -1,13 +1,36 @@
-from flask import Blueprint,g,render_template
+from flask import Blueprint,g,render_template,jsonify
 from .blog import Blog,db
 from ..tags.tag import Tag
 from ..sorts.sort import sort
 from settings import *
-
+import json
 
 
 
 blog = Blueprint('blog', __name__,url_prefix="/blog/")
+
+@blog.route('ss',methods=['GET','POST'])
+def ss():
+    return render_template("mm.html")
+
+@blog.route('qqq/',methods=['GET','POST'])
+def qqq():
+    blogs = Blog.query.all()
+    # pagination = blogs.order_by(Blog.create_time.desc()).paginate(1,pageSize,error_out=False)
+    # timeblogs=pagination.items
+    # starblogs = blogs.order_by(Blog.stars.desc()).all()
+    # tags = Tag.query.all()
+    # sorts = sort.query.all()
+    starblogsdict=[]
+    for index,blog in enumerate(blogs):
+        starblogsdict.append(blog.auth_dict())
+    context = {
+        "starblogs":starblogsdict
+
+    }
+
+    return jsonify(context)
+
 
 
 @blog.route('aboutme/')
