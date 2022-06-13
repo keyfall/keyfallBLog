@@ -9,6 +9,25 @@ import json
 
 blog = Blueprint('blog', __name__,url_prefix="/blog/")
 
+@blog.route('back/')
+def back():
+
+    return render_template("back/blogtables.html")
+
+
+@blog.route('backqueryall/<int:page>')
+def backqueryall(page):
+    if(page==None):
+        page=1
+    blogs = Blog.query
+    pagination = blogs.order_by(Blog.create_time.desc()).paginate(page,10,error_out=False)
+    timeblogs=pagination.items
+    context = {
+        'timeblogs':timeblogs,
+        "pagination":pagination,
+    }
+    return render_template("back/blogtables.html", **context)
+
 @blog.route('ss',methods=['GET','POST'])
 def ss():
     return render_template("mm.html")
