@@ -11,8 +11,11 @@ blog = Blueprint('blog', __name__,url_prefix="/blog/")
 
 @blog.route('back/')
 def back():
-
     return render_template("back/blogtables.html")
+
+@blog.route('create/')
+def create():
+    return render_template("back/newblog.html")
 
 
 @blog.route('backqueryall/<int:page>')
@@ -24,7 +27,7 @@ def backqueryall(page):
     timeblogs=pagination.items
     context = {
         'timeblogs':timeblogs,
-        "pagination":pagination,
+        "pagination":pagination
     }
     return render_template("back/blogtables.html", **context)
 

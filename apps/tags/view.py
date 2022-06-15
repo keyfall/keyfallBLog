@@ -29,6 +29,21 @@ def after_request(response):
         g.conn.close()
     return response
 
+@tag.route('backqueryall/<int:page>')
+def backqueryall(page):
+    if(page==None):
+        page=1
+    tags = Tag.query
+    pagination = tags.paginate(page,10,error_out=False)
+    tagss=pagination.items
+    context = {
+        'tags':tagss,
+        "pagination":pagination
+    }
+    return render_template("back/tagtables.html", **context)
+
+
+
 @tag.route('add/')
 def sss():
     return "ok"

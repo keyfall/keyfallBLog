@@ -28,6 +28,26 @@ def after_request(response):
         g.conn.close()
     return response
 
+
+@Sort.route('backqueryall/<int:page>')
+def backqueryall(page):
+    if(page==None):
+        page=1
+    sorts = sort.query
+    pagination = sorts.paginate(page,10,error_out=False)
+    sortss=pagination.items
+    context = {
+        'sorts':sortss,
+        "pagination":pagination
+    }
+    return render_template("back/sorttables.html", **context)
+
+
+
+@Sort.route('create/')
+def create():
+    return render_template("back/newsort.html")
+
 @Sort.route('add/')
 def sss2():
     return "ok"
