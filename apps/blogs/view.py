@@ -1,21 +1,71 @@
-from flask import Blueprint,g,render_template,jsonify
+from flask import Blueprint,g,render_template,jsonify,request,redirect,url_for
 from .blog import Blog,db
 from ..tags.tag import Tag
 from ..sorts.sort import sort
 from settings import *
-import json
-
+from .blogForm import blogForm
+import datetime
+import os
 
 
 blog = Blueprint('blog', __name__,url_prefix="/blog/")
+
+
+
+@blog.before_request
+def before_request():
+
+    engine = db.get_engine()
+    conn = engine.connect()
+    g.conn = conn
+    print("starting connection")
+
+
+@blog.after_request
+def after_request(response):
+    """
+    这里如果有两个连接分别进入，先完成的给后完成的conn关了怎么办
+    :param response:
+    :return:
+    """
+    if g.conn is not None:
+        print("closing connection")
+        g.conn.close()
+    return response
+
+
+
+
 
 @blog.route('back/')
 def back():
     return render_template("back/blogtables.html")
 
-@blog.route('create/')
+
+
+@blog.route('create/',methods=['get','post'])
 def create():
-    return render_template("back/newblog.html")
+    form = blogForm()
+    if request.method == 'GET':
+        return render_template("back/newblog.html",form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            title = form.title.data
+            content = form.content.data
+            create_time=update_time=datetime.date.today()
+            img_url=None
+            if form.fileimg.data:
+                if not os.path.exists(upload_dir+str(create_time)):
+                    os.makedirs(upload_dir+str(create_time))
+                img_url = ori_img+"/"+str(create_time)+"/"+form.fileimg.data.filename
+                form.fileimg.data.save(upload_dir+str(create_time)+"/"+form.fileimg.data.filename)
+            blog = Blog(blogname=title,content=content,create_time=create_time,update_time=update_time,image_url=img_url)
+            db.session.add(blog)
+            db.session.commit()
+        else:
+            print("报错了")
+        return redirect(url_for('blog.backqueryall',page=1))
+
 
 
 @blog.route('backqueryall/<int:page>')
@@ -76,14 +126,29 @@ def sss():
     return "ok"
 
 
-@blog.route('update/')
-def sss2():
-    return "ok"
-
-
-@blog.route('del/')
-def sss4():
-    return "ok"
+@blog.route('update/<int:id>',methods=['GET','POST'])
+def update(id):
+    form = blogForm()
+    blogs = Blog.query
+    blog = blogs.get_or_404(id)
+    if request.method == 'GET':
+        return render_template("back/editblog.html",form=form,blog=blog,id=id)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            blog.blogname=form.title.data
+            blog.content=form.content.data
+            blog.update_time=update_time=datetime.date.today();
+            img_url=None
+            if form.fileimg.data:
+                if not os.path.exists(upload_dir+str(update_time)):
+                    os.makedirs(upload_dir+str(update_time))
+                img_url = ori_img+"/"+str(update_time)+"/"+form.fileimg.data.filename
+                form.fileimg.data.save(upload_dir+str(update_time)+"/"+form.fileimg.data.filename)
+            blog.image_url=img_url
+            db.session.commit()
+        else:
+            print("报错了")
+        return redirect(url_for('blog.backqueryall',page=1))
 
 
 @blog.route('query/<int:id>')
@@ -102,6 +167,20 @@ def queryone(id):
         "starblogs":starblogs
     }
     return render_template("blog.html", **context)
+
+@blog.route('del/<int:id>/page/<int:page>')
+def dele(id,page):
+    blogs = Blog.query
+    blog = blogs.get_or_404(id)
+    if blog:
+        db.session.delete(blog)
+    pagination = blogs.order_by(Blog.create_time.desc()).paginate(page, 10, error_out=False)
+    timeblogs = pagination.items
+    context = {
+        'timeblogs': timeblogs,
+        "pagination": pagination
+    }
+    return render_template("back/blogtables.html", **context)
 
 @blog.route('queryall/')
 def queryall():

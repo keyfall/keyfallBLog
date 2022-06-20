@@ -87,13 +87,13 @@
                         <div class="dataTables_paginate paging_bootstrap pagination">
                             <ul>
 								                                            {% if pagination.has_prev %}
-                                <li class="prev disabled"><a href="#">← Previous</a></li>
+                                <li class="prev disabled"><a href="{{url_for('sort.backqueryall',page=pagination.prev_num)}}">← Previous</a></li>
 								{% endif %}
 								                            {% for i in pagination.iter_pages() %}
-                                <li class="active"><a href="#">{{i}}</a></li>
+                                <li class="active"><a href="{{url_for('sort.backqueryall',page=i)}}">{{i}}</a></li>
 								{% endfor %}
                                             {% if pagination.has_next %}
-                                <li class="next"><a href="#">Next → </a></li>
+                                <li class="next"><a href="{{url_for('sort.backqueryall',page=pagination.next_num)}}">Next → </a></li>
                                             {% endif %}
                             </ul>
                         </div>

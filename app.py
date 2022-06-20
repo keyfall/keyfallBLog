@@ -18,6 +18,8 @@ app.config["SQLALCHEMY_COMMIT_ON_TEARDOWN"] = True
 
 # 开启输出底层执行的sql语句
 app.config["SQLALCHEMY_ECHO"] = True
+# 秘钥，前端form表单时CSRF需要
+app.config['SECRET_KEY'] = "54683ASDASXCVDSQ8646"
 db = SQLAlchemy(app)
 
 

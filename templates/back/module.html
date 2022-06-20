@@ -14,6 +14,7 @@
 		padding: 9px 0;
 	  }
 	</style>
+	<!-- tiny 富文本编辑器 -->
     <link href="{{url_for('static', filename='css/bootstrap-cerulean.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{url_for('static', filename='css/kudaompq.css')}}">
     <link href="{{url_for('static', filename='css/bootstrap-responsive.css')}}" rel="stylesheet">
@@ -33,8 +34,7 @@
 	<link href="{{url_for('static', filename='css/opa-icons.css')}}" rel='stylesheet'>
 	<link href="{{url_for('static', filename='css/uploadify.css')}}" rel='stylesheet'>
     <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.ico')}}">
-	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<!--	<script src="{{url_for('static', filename='js/jquery-1.7.2.min.js')}}"></script>-->
+	<script src="{{url_for('static', filename='js/jquery-1.7.2.min.js')}}"></script>
 <!--	&lt;!&ndash; jQuery UI &ndash;&gt;-->
 <!--	<script src="{{url_for('static', filename='js/jquery-ui-1.8.21.custom.min.js')}}"></script>-->
 <!--	&lt;!&ndash; transition / effect library &ndash;&gt;-->
@@ -167,6 +167,22 @@
         </div>
     </div>
 </div>
+				<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+			<script>
+
+      tinymce.init({
+        selector: '#mytextarea',
+        plugins: [
+          'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+          'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+          'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
+        ],
+        toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+          'alignleft aligncenter alignright alignjustify | ' +
+          'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+      });
+    </script>
 {% endblock footer %}
 
 
