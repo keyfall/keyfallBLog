@@ -38,7 +38,7 @@
 			<div class="row-fluid sortable ui-sortable">
 				<div class="box span12">
 					<div class="box-header well" data-original-title="">
-						<h2><i class="icon-edit"></i>新建分类</h2>
+						<h2><i class="icon-edit"></i>分类修改</h2>
 						<div class="box-icon">
 							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
@@ -46,14 +46,15 @@
 						</div>
 					</div>
 					<div class="box-content">
-						<form class="form-horizontal"  action="{{url_for('sort.create')}}" method="POST" >
-							                    {{ form.csrf_token }}
+						<form class="form-horizontal"  action="{{url_for('sort.update',id=sort.id)}}" method="POST" >
+									{{ form.csrf_token }}
+
 						  <fieldset>
-							<legend>分类新增</legend>
+							<legend>分类修改</legend>
 							<div class="control-group">
 							  <label class="control-label">{{form.name.label}}</label>
 							  <div class="controls">
-								  {{form.name}}
+								  {{form.name(value=sort.name)}}
 							  </div>
 							</div>
 

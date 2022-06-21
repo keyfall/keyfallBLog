@@ -1,8 +1,9 @@
-from flask import Blueprint,g,render_template
+from flask import Blueprint,g,render_template,request,redirect,url_for
 from ..blogs.blog import Blog
 from ..tags.tag import Tag
 from .sort import sort,db
 from settings import *
+from .sortForm import sortForm
 
 Sort = Blueprint('sort', __name__,url_prefix="/sort/")
 
@@ -44,18 +45,40 @@ def backqueryall(page):
 
 
 
-@Sort.route('create/')
+@Sort.route('create/',methods=["GET","POST"])
 def create():
-    return render_template("back/newsort.html")
+    form = sortForm()
+    if request.method == 'GET':
+        return render_template("back/newsort.html",form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            Sort = sort(name=form.name.data,)
+            db.session.add(Sort)
+            db.session.commit()
+        else:
+            print("报错了")
+        return redirect(url_for('sort.backqueryall',page=1))
+
 
 @Sort.route('add/')
 def sss2():
     return "ok"
 
 
-@Sort.route('update/')
-def sss():
-    return "ok"
+@Sort.route('update/<int:id>',methods=["GET","POST"])
+def update(id):
+    sorts = sort.query
+    Sort = sorts.get_or_404(id)
+    form = sortForm()
+    if request.method=="GET":
+        return render_template("back/editsort.html",form=form,sort=Sort,id=id)
+    if request.method=="POST":
+        if form.validate_on_submit():
+            Sort.name = form.name.data
+            db.session.commit()
+        else:
+            print("报错了")
+        return redirect(url_for('sort.backqueryall', page=1))
 
 
 @Sort.route('del/')
