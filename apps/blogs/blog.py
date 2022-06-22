@@ -35,8 +35,6 @@ class Blog(db.Model):
         return auth_dict
 
     def auth_dict(self):
-
-
         auth_dict = {
             "id" : self.id,
             "blogname" : self.blogname,

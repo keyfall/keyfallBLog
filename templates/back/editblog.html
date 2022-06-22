@@ -70,6 +70,22 @@
                                 </div>
                             </div>
                         </div>
+                                                <div class="control-group">
+                            <label class="control-label">{{form.sort.label}}</label>
+                            <div class="controls">
+                            <select id="selectError3"  id="sort" name="sort">
+                             <option value="0"></option>
+                                {% for sort in sorts %}
+                                {% if sort.name==blog.sorts.name%}
+                                <option selected value="{{sort.id}}">{{ sort.name}}</option>
+                                {% else %}
+                                <option value="{{sort.id}}">{{ sort.name}}</option>
+                                {% endif %}
+                                {% endfor %}
+
+                            </select>
+                            </div>
+                        </div>
                         <div class="control-group">
                             <label class="control-label">{{form.content.label}}</label>
                             {{form.content}}

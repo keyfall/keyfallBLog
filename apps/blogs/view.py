@@ -47,19 +47,24 @@ def back():
 def create():
     form = blogForm()
     if request.method == 'GET':
-        return render_template("back/newblog.html",form=form)
+        tags = Tag.query.all()
+        sorts = sort.query.all()
+        return render_template("back/newblog.html",form=form,tags=tags,sorts=sorts)
     if request.method == 'POST':
         if form.validate_on_submit():
             title = form.title.data
             content = form.content.data
             create_time=update_time=datetime.date.today()
+            s=None
+            if form.sort.data!=0:
+                s = form.sort.data
             img_url=None
             if form.fileimg.data:
                 if not os.path.exists(upload_dir+str(create_time)):
                     os.makedirs(upload_dir+str(create_time))
                 img_url = ori_img+"/"+str(create_time)+"/"+form.fileimg.data.filename
                 form.fileimg.data.save(upload_dir+str(create_time)+"/"+form.fileimg.data.filename)
-            blog = Blog(blogname=title,content=content,create_time=create_time,update_time=update_time,image_url=img_url)
+            blog = Blog(blogname=title,content=content,create_time=create_time,update_time=update_time,image_url=img_url,sort_id=s)
             db.session.add(blog)
             db.session.commit()
         else:
@@ -132,12 +137,16 @@ def update(id):
     blogs = Blog.query
     blog = blogs.get_or_404(id)
     if request.method == 'GET':
-        return render_template("back/editblog.html",form=form,blog=blog,id=id)
+        tags = Tag.query.all()
+        sorts = sort.query.all()
+        return render_template("back/editblog.html",form=form,blog=blog,id=id,tags=tags,sorts=sorts)
     if request.method == 'POST':
         if form.validate_on_submit():
             blog.blogname=form.title.data
             blog.content=form.content.data
             blog.update_time=update_time=datetime.date.today();
+            if form.sort.data!=0:
+                blog.sort_id = form.sort.data
             img_url=None
             if form.fileimg.data:
                 if not os.path.exists(upload_dir+str(update_time)):

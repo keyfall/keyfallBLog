@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,SubmitField,FileField,TextAreaField,validators
+from wtforms import StringField, SubmitField, FileField, TextAreaField, validators, IntegerField
 from wtforms.validators import regexp,DataRequired
 
 
@@ -14,4 +14,8 @@ class blogForm(FlaskForm):
     content = TextAreaField(label="内容",
                             render_kw={'id':'mytextarea',
                                        'class':'cleditor'})
+    sort = IntegerField(label="分类")
+
+    tags = StringField(label="标签")
+
     submit = SubmitField("提交")

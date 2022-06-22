@@ -46,7 +46,8 @@
                 </div>
             </div>
             <div class="box-content">
-                <form class="form-horizontal" action="{{url_for('blog.create')}}" method="POST" enctype="multipart/form-data">
+                <form class="form-horizontal" action="{{url_for('blog.create')}}" method="POST"
+                      enctype="multipart/form-data">
                     {{ form.csrf_token }}
                     <fieldset>
                         <legend>博客新增</legend>
@@ -64,12 +65,26 @@
                             </div>
                         </div>
                         <div class="control-group">
+                            <label class="control-label">{{form.sort.label}}</label>
+                            <div class="controls">
+
+                            <select id="sort" name="sort">
+                                <option value="0"></option>
+                                {% for sort in sorts %}
+                                <option value="{{sort.id}}">{{ sort.name}}</option>
+                                {% endfor %}
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
                             <label class="control-label">{{form.content.label}}</label>
                             {{form.content}}
                         </div>
+
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">提交</button>
-<!--                            {{form.submit}}-->
+                            <!--                            {{form.submit}}-->
                             <button type="reset" class="btn">取消</button>
                         </div>
                     </fieldset>
@@ -77,6 +92,7 @@
                 <script>
                     $('#mytextarea').removeAttr('required')
                     $('#fileimg').removeAttr('required')
+
 
 
                 </script>

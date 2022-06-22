@@ -81,9 +81,19 @@ def update(id):
         return redirect(url_for('sort.backqueryall', page=1))
 
 
-@Sort.route('del/')
-def sss4():
-    return "ok"
+@Sort.route('del/<int:id>/page/<int:page>')
+def dele(id,page):
+    sorts = sort.query
+    Sort = sorts.get_or_404(id)
+    if Sort:
+        db.session.delete(Sort)
+    pagination = sorts.paginate(page,10,error_out=False)
+    sortss=pagination.items
+    context = {
+        'sorts':sortss,
+        "pagination":pagination
+    }
+    return render_template("back/sorttables.html", **context)
 
 
 @Sort.route('query/<int:id>/<int:page>')
