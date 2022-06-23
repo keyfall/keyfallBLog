@@ -14,9 +14,6 @@ class Blog(db.Model):
     sort_id = db.Column(db.Integer,db.ForeignKey("sort.id"))
 
 
-
-
-
     def auth_to_dict(self):
         tagsdict = {}
         for index,tag in enumerate(self.tags):
