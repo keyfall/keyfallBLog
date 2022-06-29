@@ -55,6 +55,16 @@ def create():
             title = form.title.data
             content = form.content.data
             create_time=update_time=datetime.date.today()
+            tags = form.tags.data
+            taglist = tags.split(',')
+            alltag = Tag.query.with_entities(Tag.name).all()
+            ts = []
+            for tag in taglist:
+                if str(alltag).find(tag)==-1:
+                    ts.append(Tag(name=tag))
+                else:
+                    t = Tag.query.filter_by(name=tag).first()
+                    ts.append(t)
             s=None
             if form.sort.data!=0:
                 s = form.sort.data
@@ -65,6 +75,7 @@ def create():
                 img_url = ori_img+"/"+str(create_time)+"/"+form.fileimg.data.filename
                 form.fileimg.data.save(upload_dir+str(create_time)+"/"+form.fileimg.data.filename)
             blog = Blog(blogname=title,content=content,create_time=create_time,update_time=update_time,image_url=img_url,sort_id=s)
+            blog.tags = ts
             db.session.add(blog)
             db.session.commit()
         else:
@@ -144,7 +155,17 @@ def update(id):
         if form.validate_on_submit():
             blog.blogname=form.title.data
             blog.content=form.content.data
-            blog.update_time=update_time=datetime.date.today();
+            blog.update_time=update_time=datetime.date.today()
+            tags = form.tags.data
+            taglist = tags.split(',')
+            alltag = Tag.query.with_entities(Tag.name).all()
+            ts = []
+            for tag in taglist:
+                if str(alltag).find(tag) == -1:
+                    ts.append(Tag(name=tag))
+                else:
+                    t = Tag.query.filter_by(name=tag).first()
+                    ts.append(t)
             if form.sort.data!=0:
                 blog.sort_id = form.sort.data
             img_url=None
@@ -154,6 +175,7 @@ def update(id):
                 img_url = ori_img+"/"+str(update_time)+"/"+form.fileimg.data.filename
                 form.fileimg.data.save(upload_dir+str(update_time)+"/"+form.fileimg.data.filename)
             blog.image_url=img_url
+            blog.tags=ts
             db.session.commit()
         else:
             print("报错了")

@@ -79,9 +79,11 @@
                         <div class="control-group">
 								<label class="control-label">{{form.tags.label}}</label>
 								<div class="controls">
-                                        <input type="text" id="tags" value="{% for tag in tags %}{% if loop.last %}{{tag.name}}{% else %}{{tag.name}},{% endif %}{% endfor %}"/>
+                                        <input type="text" id="tags" name="tags" value="{% for tag in tags %}{% if loop.last %}{{tag.name}}{% else %}{{tag.name}},{% endif %}{% endfor %}"/>
                                         <button id="newtag" onclick="addtag(this)" type="button" class="btn btn-dark">添加</button>
-                                        <input type='text' id='newtagtext' style="display:none">
+                                        <input type='text' id='newtagtext' style="display:none" onchange="changeValue(this)">
+                                        <button id="addtags" onclick="addvalue(this)" style="display:none" type="button" class="btn btn-dark">添加</button>
+
 								</div>
 							  </div>
                         <div class="control-group">
@@ -90,30 +92,30 @@
                         </div>
 
                         <div class="form-actions">
-<!--                            <button type="submit" class="btn btn-primary">提交</button>-->
-                            <!--                            {{form.submit}}-->
-<!--                            <button type="reset" class="btn">取消</button>-->
+                            <button type="submit" class="btn btn-primary">提交</button>
+                            <button type="reset" class="btn">取消</button>
                         </div>
                     </fieldset>
                 </form>
                 <script>
                     $('#mytextarea').removeAttr('required')
                     $('#fileimg').removeAttr('required')
+                    function changeValue(e){
+                                $(e).attr("value",$(e).val());
+                    }
                     function addtag(e){
                         e.style.display="none"
                         $('#newtagtext').removeAttr('style')
+                        $('#addtags').removeAttr('style')
                     }
-                    $('#newtagtext').bind('keyup', function(event){
-                           if(event.keyCode=="13"){
-                            if($('#newtagtext').value!=''){
-                                $("#tags").value+=','+$('#newtagtext').value
+                    function addvalue(e){
+                            if($('#newtagtext').val()!=''){
+                                $("#tags").attr('value',$("#tags").val()+','+$('#newtagtext').val())
                                 }
-                            $('#newtagtext').style.display="none"
+                            $('#newtagtext')[0].style.display="none"
                             $('#fileimg').removeAttr('style')
-                           }
-                    })
-
-
+                            e.style.display="none"
+                    }
                 </script>
             </div>
         </div><!--/span-->

@@ -7,7 +7,8 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 #账号:密码@数据库ip地址:端口号/数据库名
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:@localhost:3306/keyfallblog"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:zongming@localhost:3306/keyfallblog"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:@localhost:3306/keyfallblog"
 
 
 # 数据库修改跟踪操作

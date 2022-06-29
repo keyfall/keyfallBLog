@@ -49,7 +49,7 @@
                 <form class="form-horizontal" action="{{url_for('blog.update',id=id)}}" method="POST" enctype="multipart/form-data">
                     {{ form.csrf_token }}
                     <fieldset>
-                        <legend>博客新增</legend>
+                        <legend>博客修改</legend>
                         <div class="control-group">
                             <label class="control-label">{{form.title.label}}</label>
                             <div class="controls">
@@ -87,6 +87,16 @@
                             </div>
                         </div>
                         <div class="control-group">
+								<label class="control-label">{{form.tags.label}}</label>
+								<div class="controls">
+                                        <input type="text" id="tags" name="tags" value="{% for tag in blog.tags %}{% if loop.last %}{{tag.name}}{% else %}{{tag.name}},{% endif %}{% endfor %}"/>
+                                        <button id="newtag" onclick="addtag(this)" type="button" class="btn btn-dark">添加</button>
+                                        <input type='text' id='newtagtext' style="display:none" onchange="changeValue(this)">
+                                        <button id="addtags" onclick="addvalue(this)" style="display:none" type="button" class="btn btn-dark">添加</button>
+
+								</div>
+							  </div>
+                        <div class="control-group">
                             <label class="control-label">{{form.content.label}}</label>
                             {{form.content}}
                         </div>
@@ -101,34 +111,22 @@
                     $('#mytextarea').text('{{blog.content|safe}}');
                     $('#mytextarea').removeAttr('required');
                     $('#fileimg').removeAttr('required');
-<!--                    function change(e){-->
-<!--                    alert(getPath(e))-->
-<!--                    $('#imagef').attr("src",e.value)-->
-<!--                    }-->
-<!--                    function getPath(obj)-->
-<!--{-->
-<!--  if(obj)-->
-<!--    {-->
-
-<!--    if (window.navigator.userAgent.indexOf("MSIE")>=1)-->
-<!--      {-->
-<!--        obj.select();-->
-
-<!--      return document.selection.createRange().text;-->
-<!--      }-->
-
-<!--    else if(window.navigator.userAgent.indexOf("Firefox")>=1)-->
-<!--      {-->
-<!--      if(obj.files)-->
-<!--        {-->
-
-<!--        return obj.files.item(0).getAsDataURL();-->
-<!--        }-->
-<!--      return obj.value;-->
-<!--      }-->
-<!--    return obj.value;-->
-<!--    }-->
-<!--}-->
+                    function changeValue(e){
+                                $(e).attr("value",$(e).val());
+                    }
+                    function addtag(e){
+                        e.style.display="none"
+                        $('#newtagtext').removeAttr('style')
+                        $('#addtags').removeAttr('style')
+                    }
+                    function addvalue(e){
+                            if($('#newtagtext').val()!=''){
+                                $("#tags").attr('value',$("#tags").val()+','+$('#newtagtext').val())
+                                }
+                            $('#newtagtext')[0].style.display="none"
+                            $('#fileimg').removeAttr('style')
+                            e.style.display="none"
+                    }
 
                 </script>
             </div>
