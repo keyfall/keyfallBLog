@@ -79,7 +79,7 @@
                         <div class="control-group">
 								<label class="control-label">{{form.tags.label}}</label>
 								<div class="controls">
-                                        <input type="text" id="tags" name="tags" value="{% for tag in tags %}{% if loop.last %}{{tag.name}}{% else %}{{tag.name}},{% endif %}{% endfor %}"/>
+                                        <input type="text" id="tags" name="tags" value=""/>
                                         <button id="newtag" onclick="addtag(this)" type="button" class="btn btn-dark">添加</button>
                                         <input type='text' id='newtagtext' style="display:none" onchange="changeValue(this)">
                                         <button id="addtags" onclick="addvalue(this)" style="display:none" type="button" class="btn btn-dark">添加</button>
@@ -111,6 +111,9 @@
                     function addvalue(e){
                             if($('#newtagtext').val()!=''){
                                 $("#tags").attr('value',$("#tags").val()+','+$('#newtagtext').val())
+                                }else{
+                                $("#tags").attr($('#newtagtext').val())
+
                                 }
                             $('#newtagtext')[0].style.display="none"
                             $('#fileimg').removeAttr('style')

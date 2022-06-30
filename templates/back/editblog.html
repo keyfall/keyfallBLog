@@ -122,6 +122,9 @@
                     function addvalue(e){
                             if($('#newtagtext').val()!=''){
                                 $("#tags").attr('value',$("#tags").val()+','+$('#newtagtext').val())
+                                }else{
+                                $("#tags").attr($('#newtagtext').val())
+
                                 }
                             $('#newtagtext')[0].style.display="none"
                             $('#fileimg').removeAttr('style')
